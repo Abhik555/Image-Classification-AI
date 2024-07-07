@@ -15,7 +15,7 @@ Includes pre-trained model files for quick implementation
     
 2. To train your own model
 
-    1. Edit the code in app.py to meet your need case and run the file using ``` python app.py -train ```
+    1. Edit the code in app.py to meet your need case and run the file using ``` python app.py -train [no of iterations]```
 
 
 ## Architecture
@@ -68,7 +68,7 @@ Cross-Entropy Loss measures the performance of a classification model whose outp
 
 Mathematically, for a single example with CC classes, the Cross-Entropy Loss LL is computed as:
 
-L=−∑yilog⁡(pi)
+L= −∑ yi * log⁡(pi)
 
 Where:
 
@@ -84,4 +84,4 @@ It Aims to minimize the loss function , by starting from a random point and goin
 
 ## License 
 
-[MIT](https://test)
+[MIT](https://en.wikipedia.org/wiki/MIT_License)

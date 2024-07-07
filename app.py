@@ -17,8 +17,27 @@ image_path = ''
 model_path = './classifier.pth'
 classes = []
 
+#Hyper parameters
+
+bsize = 4
+loss_rate = 0.001
+momentum = 0.9
+output_path = "./classifier.pth"
+train_iterations = 2
+
+if len(args) == 1:
+    print('please provide proper arguments refer to github page for more information')
+    sys.exit()
+
 if '-train' in args:
     pretrained = False
+    iters = args[args.index('-train') + 1]
+    if iters.isnumeric():
+        train_iterations = eval(iters)
+    else:
+        print("Train Iterations Must be a valid Number")
+        sys.exit()
+    classes = ['airplane' ,'automobile','bird' ,'cat' ,'deer' ,'dog' ,'frog' ,'horse' ,'ship','truck']
 
 if '-image' in args:
     pretrained = True
@@ -30,13 +49,6 @@ if '-classes' in args:
 elif pretrained:
     classes = ['airplane' ,'automobile','bird' ,'cat' ,'deer' ,'dog' ,'frog' ,'horse' ,'ship','truck']
 
-#Hyper parameters
-
-bsize = 4
-loss_rate = 0.001
-momentum = 0.9
-output_path = "./classifer.pth"
-train_iterations = 2
 
 #Utility Functions
 
@@ -69,6 +81,16 @@ if not pretrained:
     print('training set: ',len(training_set))
     print('validation set: ' ,len(validation_set))
 
+
+#Printing Parameters for training
+if not pretrained:
+    print()
+    print('Batch Size: ',bsize)
+    print('Loss Rate: ',loss_rate)
+    print('Momentum: ',momentum)
+    print('Training Iterations: ',train_iterations)
+    print('Output Path: ',output_path)
+    print()
 
 #Definining the Model
 
@@ -160,7 +182,7 @@ if not pretrained:
     images, labels = next(dataiter)
 
     # print images
-    imshow(torchvision.utils.make_grid(images))
+    imshow(torchvision.utils.make_grid(images) , True)
     print('GroundTruth: ', ' '.join(f'{classes[labels[j]]:5s}' for j in range(bsize))) #The correct image type
 
     #Load model
