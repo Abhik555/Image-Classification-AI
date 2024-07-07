@@ -6,6 +6,8 @@ A Project to understand and implement a Image Classification Convolutional Neura
 
 Includes pre-trained model files for quick implementation
 
+.ipynb file included for easy importing to online platforms like google colab
+
 ## How to use
 
 1. Using the CIFAR10 Dataset

@@ -16,6 +16,7 @@ pretrained = False
 image_path = ''
 model_path = './classifier.pth'
 classes = []
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 #Hyper parameters
 
@@ -91,6 +92,8 @@ if not pretrained:
     print('Training Iterations: ',train_iterations)
     print('Output Path: ',output_path)
     print()
+    print('Device: ', device)
+    print()
 
 #Definining the Model
 
@@ -120,7 +123,7 @@ class ImageClassifier(nn.Module):
 
 #Instanciating Model
 
-net = ImageClassifier()
+net = ImageClassifier().to(device)
 
 if pretrained:
     net.load_state_dict(torch.load(model_path))
@@ -142,6 +145,10 @@ if not pretrained:
             #Parse the data
             image , labels = data
 
+            image = image.to(device)
+            labels = labels.to(device)
+
+
             optimizer.zero_grad() #reset gradient values
 
             outputs = net(image)
@@ -155,7 +162,7 @@ if not pretrained:
             #print stats
             running_loss += loss.item()
             if i % 2000 == 1999:
-                print('\r [',epoch +1 ,', ',i +1,'] running loss = ',running_loss * (1/100),'%')
+                print('\r Batch , Iterations [',epoch +1 ,', ',i +1,'] running loss = ',running_loss * (1/100),'%')
                 running_loss = 0.0
 
     torch.save(net.state_dict() , output_path) #save the model
